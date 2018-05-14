@@ -11,7 +11,7 @@ class Test(unittest.TestCase):
 
 
     def setUp(self):
-        self.stock = Security('E.On')
+        self.stock = Security('E.On', 'EOAN')
         self.stock.price = 10
         self.stock.book = 250
         self.stock.shares_outstanding = 50
