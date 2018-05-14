@@ -11,11 +11,12 @@ class Security(object):
     '''
 
 
-    def __init__(self, name):
+    def __init__(self, name, symbol):
         '''
         Constructor
         '''
         self.name = name
+        self.symbol = symbol
         self.price = math.inf
         self.book = 0
         self.shares_outstanding = 0
