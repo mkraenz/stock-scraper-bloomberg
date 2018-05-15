@@ -97,7 +97,7 @@ class SecurityDataMinerBloomberg(object):
         shares_outstanding = self.__parse_human_readable_number_to_int(great_uncle.text)
         return shares_outstanding
     
-    def mine_book_value(self):
+    def mine_price_to_book(self):
         text = 'Price to Book Ratio'
         great_uncle = self.get_great_uncle_tag_by_text(text)
         return float(great_uncle.text)
@@ -108,7 +108,7 @@ if __name__ == '__main__':
     URL = 'https://www.bloomberg.com/quote/EOAN:GR'
     miner = SecurityDataMinerBloomberg(URL)
     miner.update_html()
-    print(miner.mine_price())
-    print(miner.mine_shares_outstanding())
-    print(miner.mine_book_value())
+    print('price = ', miner.mine_price())
+    print('shares outstanding = ', miner.mine_shares_outstanding())
+    print('price-to-book =', miner.mine_price_to_book())
     

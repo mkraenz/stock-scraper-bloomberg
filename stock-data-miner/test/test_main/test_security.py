@@ -47,9 +47,9 @@ class TestSecurityDataMinerBloomberg(unittest.TestCase):
         self.miner.update_html_soup(TestSecurityDataMinerBloomberg.html_example)
         self.assertEqual(self.miner.mine_price(), 9.29)
         
-    def test_mine_book_value(self):
+    def test_mine_price_to_book(self):
         self.miner.update_html_soup(TestSecurityDataMinerBloomberg.html_example)
-        self.assertEqual(self.miner.mine_book_value(), 4.5789)
+        self.assertEqual(self.miner.mine_price_to_book(), 4.5789)
         
     def test_mine_shares_outstanding(self):
         self.miner.update_html_soup(TestSecurityDataMinerBloomberg.html_example)
