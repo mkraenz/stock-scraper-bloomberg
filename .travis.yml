@@ -6,8 +6,7 @@ python:
 #install:
 #  - pip install -r requirements.txt
   
-script:
-  - python test_security.py
+script: python test/test_main/test_security.py
 #  - coverage run test_main.test_security.py
 
 #after_success:

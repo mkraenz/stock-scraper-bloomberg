@@ -4,7 +4,7 @@ Created on 15.05.2018
 @author: Mirco
 '''
 import unittest
-from main.security import Security, SecurityDataMinerBloomberg
+from miner.security import Security, SecurityDataMinerBloomberg
 
 
 class TestSecurity(unittest.TestCase):
