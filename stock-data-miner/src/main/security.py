@@ -35,6 +35,9 @@ class Security(object):
     def get_B_to_M(self):
         return self.book / self.get_market_cap()
     
+    def set_book(self, price_to_book):
+        self.book = self.price / price_to_book
+    
     
 class SecurityDataMinerBloomberg(object):
     
