@@ -56,15 +56,15 @@ class SecurityDataMiner(object):
         if request.status == 200:
             self.html_soup = BeautifulSoup(request.data, 'html.parser')
 
-    def get_tag_by_name(self, name):
+    def __get_tag_by_name(self, name):
         return self.html_soup.find('span', attrs={'class':name})
 
     def mine_price(self):
-        return float(self.get_tag_content_by_name('priceText__1853e8a5'))
+        return float(self.__get_tag_text_by_name('priceText__1853e8a5'))
     
 
-    def get_tag_content_by_name(self, name):
-        tag = self.get_tag_by_name(name)
+    def __get_tag_text_by_name(self, name):
+        tag = self.__get_tag_by_name(name)
         content = tag.text.strip()
         return content
 
