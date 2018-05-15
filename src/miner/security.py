@@ -12,7 +12,6 @@ class Security(object):
     classdocs
     '''
 
-
     def __init__(self, name, symbol):
         '''
         Constructor
