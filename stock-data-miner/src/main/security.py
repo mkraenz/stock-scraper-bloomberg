@@ -63,15 +63,12 @@ class SecurityDataMinerBloomberg(object):
         if request.status == 200:
             self.update_html_soup(request.data)
 
-    def __get_tag_by_name(self, name):
-        return self.html_soup.find('span', attrs={'class':name})
-
     def mine_price(self):
-        return float(self.__get_tag_text_by_name('priceText__1853e8a5'))
+        return float(self.__get_tag_text_by_class('priceText__1853e8a5').replace(",", ""))
     
 
-    def __get_tag_text_by_name(self, name):
-        tag = self.__get_tag_by_name(name)
+    def __get_tag_text_by_class(self, html_class):
+        tag = self.html_soup.find('span', attrs={'class':html_class})
         content = tag.text.strip()
         return content
 
@@ -108,7 +105,7 @@ class SecurityDataMinerBloomberg(object):
     
     
 if __name__ == '__main__':
-    URL = 'https://www.bloomberg.com/quote/EOAN:GR'
+    URL = 'https://www.bloomberg.com/quote/GOOGL:US'
     miner = SecurityDataMinerBloomberg(URL)
     miner.update_html()
     print('price = ', miner.mine_price())
