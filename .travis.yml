@@ -14,5 +14,5 @@ script:
   # Upload coverage data to codecov
 #  - codecov
   
-# notifications:
-#  email: false
+notifications:
+  email: false
