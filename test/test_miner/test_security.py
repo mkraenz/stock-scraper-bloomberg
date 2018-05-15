@@ -6,7 +6,13 @@ Created on 15.05.2018
 
 # path hack
 import sys, os
-sys.path.insert(0, os.path.abspath('E:\git-repositories\stock-data-miner\src'))
+dirname = os.path.dirname(__file__)
+print(dirname)
+src_dirname = dirname.replace('test/test_miner', 'src')
+print(src_dirname)
+sys.path.insert(0, os.path.abspath(src_dirname))
+
+# sys.path.insert(0, os.path.abspath('E:\git-repositories\stock-data-miner\src'))
 
 
 import unittest
