@@ -36,7 +36,7 @@ class Security(object):
         return self.book / self.get_market_cap()
     
     
-class SecurityDataMiner(object):
+class SecurityDataMinerBloomberg(object):
     
     html_soup = None
     
@@ -47,6 +47,10 @@ class SecurityDataMiner(object):
         self.url = url
         self.html_soup = None
         
+
+    def update_html_soup(self, html_data):
+        self.html_soup = BeautifulSoup(html_data, 'html.parser')
+
     def update_html(self):
         '''
         Download the website and prepare it for scraping.
@@ -54,7 +58,7 @@ class SecurityDataMiner(object):
         http = urllib3.PoolManager()
         request = http.request('GET', self.url, timeout=4.0)
         if request.status == 200:
-            self.html_soup = BeautifulSoup(request.data, 'html.parser')
+            self.update_html_soup(request.data)
 
     def __get_tag_by_name(self, name):
         return self.html_soup.find('span', attrs={'class':name})
@@ -102,7 +106,7 @@ class SecurityDataMiner(object):
     
 if __name__ == '__main__':
     URL = 'https://www.bloomberg.com/quote/EOAN:GR'
-    miner = SecurityDataMiner(URL)
+    miner = SecurityDataMinerBloomberg(URL)
     miner.update_html()
     print(miner.mine_price())
     print(miner.mine_shares_outstanding())
