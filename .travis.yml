@@ -8,7 +8,7 @@ python:
   
 script: 
   - python src/miner/security.py
-  - cp -a test src
+  - cp -a test/. src
   - python src/test_miner/test_security.py
 #  - coverage run test_main.test_security.py
 
