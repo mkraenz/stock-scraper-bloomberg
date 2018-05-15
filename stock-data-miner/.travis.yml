@@ -3,16 +3,16 @@ language: python
 python:
   - "3.6"
 
-install:
-  - pip install -r requirements.txt
+#install:
+#  - pip install -r requirements.txt
   
 script:
   - python test_main.test_security.py
-  - coverage run test_main.test_security.py
+#  - coverage run test_main.test_security.py
 
-after_success:
+#after_success:
   # Upload coverage data to codecov
-  - codecov
+#  - codecov
   
- notifications:
-  email: false
+# notifications:
+#  email: false
