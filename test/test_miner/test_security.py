@@ -3,9 +3,14 @@ Created on 15.05.2018
 
 @author: Mirco
 '''
+
+# path hack
+import sys, os
+sys.path.insert(0, os.path.abspath('E:\git-repositories\stock-data-miner\src'))
+
+
 import unittest
 from miner.security import Security, SecurityDataMinerBloomberg
-
 
 class TestSecurity(unittest.TestCase):
 
@@ -30,7 +35,9 @@ class TestSecurity(unittest.TestCase):
         
 class TestSecurityDataMinerBloomberg(unittest.TestCase):
     
-    file = open('bloomberg-eoan-2018-05-15.html', 'r')
+    dirname = os.path.dirname(__file__)
+    filename = os.path.join(dirname, 'bloomberg-eoan-2018-05-15.html')
+    file = open(filename, 'r')
     html_example = file.read()
     file.close()
     
