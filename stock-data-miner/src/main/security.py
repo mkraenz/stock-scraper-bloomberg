@@ -81,17 +81,30 @@ class SecurityDataMiner(object):
             raise ValueError('Given number_str must end on "B" or "M".')
             
     
-    def mine_shares_outstanding(self):
-        shares_outstanding_string_tag = self.html_soup.find(text='Shares Outstanding')
+
+    def get_great_uncle_tag_by_text(self, text):
+        shares_outstanding_string_tag = self.html_soup.find(text=text)
         great_uncle = shares_outstanding_string_tag.parent.parent.next_sibling
+        return great_uncle
+
+    def mine_shares_outstanding(self):
+        text = 'Shares Outstanding'
+        great_uncle = self.get_great_uncle_tag_by_text(text)
         shares_outstanding = self.__parse_human_readable_number_to_int(great_uncle.text)
         return shares_outstanding
+    
+    def mine_book_value(self):
+        text = 'Price to Book Ratio'
+        great_uncle = self.get_great_uncle_tag_by_text(text)
+        return float(great_uncle.text)
+        
     
     
 if __name__ == '__main__':
     URL = 'https://www.bloomberg.com/quote/EOAN:GR'
     miner = SecurityDataMiner(URL)
     miner.update_html()
-#     print(miner.mine_price())
+    print(miner.mine_price())
     print(miner.mine_shares_outstanding())
+    print(miner.mine_book_value())
     
