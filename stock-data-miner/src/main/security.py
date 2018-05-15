@@ -4,6 +4,8 @@ Created on 15.05.2018
 @author: Mirco
 '''
 import math
+import urllib3
+from bs4 import BeautifulSoup
 
 class Security(object):
     '''
@@ -28,7 +30,68 @@ class Security(object):
         return self.book / self.price
     
     def get_market_cap(self):
-        return self.shares_outstanding*self.price
+        return self.shares_outstanding * self.price
     
     def get_B_to_M(self):
         return self.book / self.get_market_cap()
+    
+    
+class SecurityDataMiner(object):
+    
+    html_soup = None
+    
+    def __init__(self, url):
+        '''
+        :param url: url to the website which shall be scraped
+        '''
+        self.url = url
+        self.html_soup = None
+        
+    def update_html(self):
+        '''
+        Download the website and prepare it for scraping.
+        '''
+        http = urllib3.PoolManager()
+        request = http.request('GET', self.url, timeout=4.0)
+        if request.status == 200:
+            self.html_soup = BeautifulSoup(request.data, 'html.parser')
+
+    def get_tag_by_name(self, name):
+        return self.html_soup.find('span', attrs={'class':name})
+
+    def mine_price(self):
+        return float(self.get_tag_content_by_name('priceText__1853e8a5'))
+    
+
+    def get_tag_content_by_name(self, name):
+        tag = self.get_tag_by_name(name)
+        content = tag.text.strip()
+        return content
+
+
+    def __parse_human_readable_number_to_int(self, number_str):
+        ''' Example: 1.2B = 1200000000, 2.3M = 2300000
+        '''
+        number = float(number_str[:-1])
+        if number_str[-1] == 'B':
+            return int(number * (10 ** 9)) 
+        elif number_str[-1] == 'M':
+            return int(number * (10 ** 6)) 
+        else:
+            raise ValueError('Given number_str must end on "B" or "M".')
+            
+    
+    def mine_shares_outstanding(self):
+        shares_outstanding_string_tag = self.html_soup.find(text='Shares Outstanding')
+        great_uncle = shares_outstanding_string_tag.parent.parent.next_sibling
+        shares_outstanding = self.__parse_human_readable_number_to_int(great_uncle.text)
+        return shares_outstanding
+    
+    
+if __name__ == '__main__':
+    URL = 'https://www.bloomberg.com/quote/EOAN:GR'
+    miner = SecurityDataMiner(URL)
+    miner.update_html()
+#     print(miner.mine_price())
+    print(miner.mine_shares_outstanding())
+    

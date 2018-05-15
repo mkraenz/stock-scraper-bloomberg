@@ -4,10 +4,10 @@ Created on 15.05.2018
 @author: Mirco
 '''
 import unittest
-from main.security import Security
+from main.security import Security, SecurityDataMiner
 
 
-class Test(unittest.TestCase):
+class TestSecurity(unittest.TestCase):
 
 
     def setUp(self):
@@ -28,6 +28,17 @@ class Test(unittest.TestCase):
         
     def test_get_B_to_M(self):
         self.assertEqual(self.stock.get_B_to_M(), 0.5)
+        
+class TestSecurityDataMiner(unittest.TestCase):
+    
+    def setUp(self):
+        unittest.TestCase.setUp(self)
+        self.miner = SecurityDataMiner('')
+        
+    
+    def test___parse_human_readable_number_to_int(self):
+        self.assertEqual(1200000000, self.miner._SecurityDataMiner__parse_human_readable_number_to_int('1.2B'))
+        self.assertEqual(2300000, self.miner._SecurityDataMiner__parse_human_readable_number_to_int('2.3M'))
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
