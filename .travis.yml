@@ -1,0 +1,19 @@
+language: python
+
+python:
+  - "3.6"
+
+install:
+  - pip install -r requirements.txt
+  
+script: 
+  - python src/miner/security.py
+  - python test/test_miner/test_security.py
+#  - coverage run test/test_miner.test_security.py
+
+#after_success:
+  # Upload coverage data to codecov
+#  - codecov
+  
+notifications:
+  email: false
