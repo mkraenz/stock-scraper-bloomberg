@@ -4,8 +4,6 @@ Created on 15.05.2018
 @author: Mirco
 '''
 import math
-from scraper.scraper_bloomberg import ScraperBloomberg
-
 
 class Security(object):
     '''
@@ -41,9 +39,3 @@ class Security(object):
         
     def __str__(self):
         return str((self.name, self.symbol, self.price, self.shares_outstanding, self.book))
-    
-    
-if __name__ == '__main__':
-    scraper = ScraperBloomberg()
-    stock = Security('E.On SE', 'EOAN:GR', scraper)
-    print(stock)

@@ -24,6 +24,9 @@ class TestSecurity(unittest.TestCase):
     def test_book_to_market(self):
         self.assertEqual(self.stock.book_to_market(), 0.5)
         
+    def test_to_string(self):
+        self.assertTrue(str(self.stock))
+        
 class TestSecurityWithScraper(unittest.TestCase):
     
     def setUp(self):
