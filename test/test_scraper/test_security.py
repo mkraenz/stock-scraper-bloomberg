@@ -16,18 +16,14 @@ class TestSecurity(unittest.TestCase):
         self.stock.book = 250
         self.stock.shares_outstanding = 50
 
+    def test_price_to_book(self):
+        self.assertEqual(self.stock.price_to_book(), 2)
 
-    def test_get_P_to_B(self):
-        self.assertEqual(self.stock.get_P_to_B(), 0.04)
-
-    def test_get_B_to_P(self):
-        self.assertEqual(self.stock.get_B_to_P(), 25)
+    def test_market_cap(self):
+        self.assertEqual(self.stock.market_cap(), 500)
         
-    def test_get_market_cap(self):
-        self.assertEqual(self.stock.get_market_cap(), 500)
-        
-    def test_get_B_to_M(self):
-        self.assertEqual(self.stock.get_B_to_M(), 0.5)
+    def test_book_to_market(self):
+        self.assertEqual(self.stock.book_to_market(), 0.5)
         
 class TestScraperBloomberg(unittest.TestCase):
 
@@ -54,15 +50,15 @@ class TestScraperBloomberg(unittest.TestCase):
 
     def test_mine_price(self):
         self.miner.update_html_soup(self.html_example)
-        self.assertEqual(self.miner.mine_price(), 9.29)
+        self.assertEqual(self.miner.scrape_price(), 9.29)
         
     def test_mine_price_to_book(self):
         self.miner.update_html_soup(self.html_example)
-        self.assertEqual(self.miner.mine_price_to_book(), 4.5789)
+        self.assertEqual(self.miner.scrape_price_to_book(), 4.5789)
         
     def test_mine_shares_outstanding(self):
         self.miner.update_html_soup(self.html_example)
-        self.assertEqual(self.miner.mine_shares_outstanding(), 2.2 * 10 ** 9)
+        self.assertEqual(self.miner.scrape_shares_outstanding(), 2.2 * 10 ** 9)
 
 if __name__ == "__main__":
     unittest.main()

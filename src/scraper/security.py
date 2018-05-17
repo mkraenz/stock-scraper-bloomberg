@@ -7,49 +7,66 @@ import math
 import urllib3
 from bs4 import BeautifulSoup
 
+
 class Security(object):
     '''
     classdocs
     '''
 
-    def __init__(self, name, symbol):
+    def __init__(self, name, symbol, scraper=None):
         self.name = name
         self.symbol = symbol
-        self.price = math.inf
-        self.book = 0
-        self.shares_outstanding = 0
+        if scraper:
+            self.scraper = scraper
+            scraper.set_url(self.symbol)
+            self.update()
+        else:
+            self.price = math.inf
+            self.book = 0
+            self.shares_outstanding = 0
     
-    def get_P_to_B(self):
-        return self.price / self.book
+    def price_to_book(self):
+        return self.market_cap()  / self.book
     
-    def get_B_to_P(self):
-        return self.book / self.price
-    
-    def get_market_cap(self):
+    def market_cap(self):
         return self.shares_outstanding * self.price
     
-    def get_B_to_M(self):
-        return self.book / self.get_market_cap()
+    def book_to_market(self):
+        return self.book / self.market_cap()
     
     def set_book(self, price_to_book):
-        self.book = self.price / price_to_book
-    
+        self.book = 1 / price_to_book * self.market_cap()
+        
+    def update(self):
+        self.scraper.update()
+        self.price = self.scraper.scrape_price()
+        self.shares_outstanding = self.scraper.scrape_shares_outstanding()
+        price_to_book = self.scraper.scrape_price_to_book()
+        self.set_book(price_to_book)
+        
+#     def __str__(self):
+#         return 
+
     
 class ScraperBloomberg(object):
     
     html_soup = None
+    BASE_URL = 'https://www.bloomberg.com/quote/'
     
-    def __init__(self, url):
+    def __init__(self, url=None):
         '''
         :param url: url to the website which shall be scraped
         '''
-        self.url = url
+        if url: self.url = url
         self.html_soup = None
+        
+    def set_url(self, stock_symbol):
+        self.url = self.BASE_URL + stock_symbol
 
     def update_html_soup(self, html_data):
         self.html_soup = BeautifulSoup(html_data, 'html.parser')
 
-    def update_html(self):
+    def update(self):
         '''
         Download the website and prepare it for scraping.
         '''
@@ -58,7 +75,7 @@ class ScraperBloomberg(object):
         if request.status == 200:
             self.update_html_soup(request.data)
 
-    def mine_price(self):
+    def scrape_price(self):
         return float(self.__get_tag_text_by_class('priceText__1853e8a5').replace(",", ""))
 
     def __get_tag_text_by_class(self, html_class):
@@ -81,19 +98,20 @@ class ScraperBloomberg(object):
         great_uncle = shares_outstanding_string_tag.parent.parent.next_sibling
         return great_uncle
 
-    def mine_shares_outstanding(self):
+    def scrape_shares_outstanding(self):
         great_uncle = self.get_great_uncle_tag_by_text('Shares Outstanding')
         shares_outstanding = self.__parse_human_readable_number_to_int(great_uncle.text)
         return shares_outstanding
     
-    def mine_price_to_book(self):
+    def scrape_price_to_book(self):
         great_uncle = self.get_great_uncle_tag_by_text('Price to Book Ratio')
         return float(great_uncle.text)
         
 if __name__ == '__main__':
-    URL = 'https://www.bloomberg.com/quote/GOOGL:US'
-    miner = ScraperBloomberg(URL)
-    miner.update_html()
-    print('price = ', miner.mine_price())
-    print('shares outstanding = ', miner.mine_shares_outstanding())
-    print('price-to-book =', miner.mine_price_to_book())
+    scraper = ScraperBloomberg()
+    stock = Security('Google', 'EOAN:GR', scraper)
+    print('price = ', stock.price)
+    print('shares outstanding = ', stock.shares_outstanding)
+    print('book =', stock.book)
+    
+    
