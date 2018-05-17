@@ -38,6 +38,7 @@ class TestSecurityWithScraper(unittest.TestCase):
         self.stock = Security('E.On SE', 'EOAN:GR', scraper_mock)
         
     def test_book(self):
+        self.stock.update()
         self.assertEqual(250, self.stock.book)
         
 class TestScraperBloomberg(unittest.TestCase):
