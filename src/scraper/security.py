@@ -41,12 +41,10 @@ class Security(object):
         self.scraper.update()
         self.price = self.scraper.scrape_price()
         self.shares_outstanding = self.scraper.scrape_shares_outstanding()
-        price_to_book = self.scraper.scrape_price_to_book()
-        self.set_book(price_to_book)
+        self.set_book(self.scraper.scrape_price_to_book())
         
-#     def __str__(self):
-#         return 
-
+    def __str__(self):
+        return str((self.name, self.symbol, self.price, self.shares_outstanding,self.book))
     
 class ScraperBloomberg(object):
     
@@ -109,9 +107,7 @@ class ScraperBloomberg(object):
         
 if __name__ == '__main__':
     scraper = ScraperBloomberg()
-    stock = Security('Google', 'EOAN:GR', scraper)
-    print('price = ', stock.price)
-    print('shares outstanding = ', stock.shares_outstanding)
-    print('book =', stock.book)
-    
+    stock = Security('E.On SE', 'EOAN:GR', scraper)
+    print(stock)
+
     
