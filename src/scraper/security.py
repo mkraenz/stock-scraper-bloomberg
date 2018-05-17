@@ -38,7 +38,7 @@ class Security(object):
         self.book = self.price / price_to_book
     
     
-class SecurityDataMinerBloomberg(object):
+class ScraperBloomberg(object):
     
     html_soup = None
     
@@ -105,7 +105,7 @@ class SecurityDataMinerBloomberg(object):
     
 if __name__ == '__main__':
     URL = 'https://www.bloomberg.com/quote/GOOGL:US'
-    miner = SecurityDataMinerBloomberg(URL)
+    miner = ScraperBloomberg(URL)
     miner.update_html()
     print('price = ', miner.mine_price())
     print('shares outstanding = ', miner.mine_shares_outstanding())
