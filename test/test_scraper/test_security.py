@@ -7,6 +7,7 @@ import os
 
 import unittest
 from scraper.security import Security, ScraperBloomberg
+from unittest.mock import MagicMock
 
 class TestSecurity(unittest.TestCase):
 
@@ -25,6 +26,19 @@ class TestSecurity(unittest.TestCase):
     def test_book_to_market(self):
         self.assertEqual(self.stock.book_to_market(), 0.5)
         
+class TestSecurityWithScraper(unittest.TestCase):
+    
+    def setUp(self):
+        unittest.TestCase.setUp(self)
+        scraper_mock = MagicMock()
+        scraper_mock.scrape_price.return_value = 10
+        scraper_mock.scrape_price_to_book.return_value = 2
+        scraper_mock.scrape_shares_outstanding.return_value = 50
+        self.stock = Security('E.On SE', 'EOAN:GR', scraper_mock)
+        
+    def test_book(self):
+        self.assertEqual(250, self.stock.book)
+        
 class TestScraperBloomberg(unittest.TestCase):
 
     def __init__(self, tests=()):
@@ -42,7 +56,6 @@ class TestScraperBloomberg(unittest.TestCase):
     def setUp(self):
         unittest.TestCase.setUp(self)
         self.miner = ScraperBloomberg('')
-        
     
     def test___parse_human_readable_number_to_int(self):
         self.assertEqual(1200000000, self.miner._ScraperBloomberg__parse_human_readable_number_to_int('1.2B'))

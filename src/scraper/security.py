@@ -26,7 +26,7 @@ class Security(object):
             self.shares_outstanding = 0
     
     def price_to_book(self):
-        return self.market_cap()  / self.book
+        return self.market_cap() / self.book
     
     def market_cap(self):
         return self.shares_outstanding * self.price
@@ -44,11 +44,11 @@ class Security(object):
         self.set_book(self.scraper.scrape_price_to_book())
         
     def __str__(self):
-        return str((self.name, self.symbol, self.price, self.shares_outstanding,self.book))
+        return str((self.name, self.symbol, self.price, self.shares_outstanding, self.book))
     
 class ScraperBloomberg(object):
     
-    html_soup = None
+    html_soup = None    
     BASE_URL = 'https://www.bloomberg.com/quote/'
     
     def __init__(self, url=None):
@@ -109,5 +109,3 @@ if __name__ == '__main__':
     scraper = ScraperBloomberg()
     stock = Security('E.On SE', 'EOAN:GR', scraper)
     print(stock)
-
-    
