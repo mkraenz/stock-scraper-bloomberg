@@ -1,4 +1,4 @@
-from test_miner.test_security import TestSecurityDataMinerBloomberg, TestSecurity
+from test_scraper.test_security import TestScraperBloomberg, TestSecurity
 import unittest
 
 
