@@ -34,14 +34,11 @@ class Security(object):
     def book_to_market(self):
         return self.book / self.market_cap()
     
-    def set_book(self, price_to_book):
-        self.book = 1 / price_to_book * self.market_cap()
-        
     def update(self):
         self.scraper.update()
         self.price = self.scraper.scrape_price()
         self.shares_outstanding = self.scraper.scrape_shares_outstanding()
-        self.set_book(self.scraper.scrape_price_to_book())
+        self.book = self.scraper.scrape_book()
         
     def __str__(self):
         return str((self.name, self.symbol, self.price, self.shares_outstanding, self.book))
@@ -104,7 +101,15 @@ class ScraperBloomberg(object):
     def scrape_price_to_book(self):
         great_uncle = self.get_great_uncle_tag_by_text('Price to Book Ratio')
         return float(great_uncle.text)
+    
+    def scrape_book(self):
+        price_to_book = self.scrape_price_to_book()
+        shares_outstanding = self.scrape_shares_outstanding()
+        price = self.scrape_price()
+        market_cap = shares_outstanding * price
+        return 1 / price_to_book * market_cap
         
+    
 if __name__ == '__main__':
     scraper = ScraperBloomberg()
     stock = Security('E.On SE', 'EOAN:GR', scraper)
