@@ -3,14 +3,7 @@ Created on 15.05.2018
 
 @author: Mirco
 '''
-import sys, os
-
-def add_src_to_syspath():
-    dirname = os.path.dirname(__file__)
-    src_dirname = dirname.replace('test/test_miner', 'src')
-    sys.path.insert(0, os.path.abspath(src_dirname))
-add_src_to_syspath()
-
+import os
 
 import unittest
 from miner.security import Security, SecurityDataMinerBloomberg
