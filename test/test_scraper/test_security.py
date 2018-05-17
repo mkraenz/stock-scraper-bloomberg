@@ -3,10 +3,9 @@ Created on 15.05.2018
 
 @author: Mirco
 '''
-import os
-
 import unittest
-from scraper.security import Security, ScraperBloomberg
+from unittest.mock import MagicMock
+from scraper.security import Security
 
 class TestSecurity(unittest.TestCase):
 
@@ -16,53 +15,31 @@ class TestSecurity(unittest.TestCase):
         self.stock.book = 250
         self.stock.shares_outstanding = 50
 
+    def test_price_to_book(self):
+        self.assertEqual(self.stock.price_to_book(), 2)
 
-    def test_get_P_to_B(self):
-        self.assertEqual(self.stock.get_P_to_B(), 0.04)
-
-    def test_get_B_to_P(self):
-        self.assertEqual(self.stock.get_B_to_P(), 25)
+    def test_market_cap(self):
+        self.assertEqual(self.stock.market_cap(), 500)
         
-    def test_get_market_cap(self):
-        self.assertEqual(self.stock.get_market_cap(), 500)
+    def test_book_to_market(self):
+        self.assertEqual(self.stock.book_to_market(), 0.5)
         
-    def test_get_B_to_M(self):
-        self.assertEqual(self.stock.get_B_to_M(), 0.5)
+    def test_to_string(self):
+        self.assertTrue(str(self.stock))
         
-class TestScraperBloomberg(unittest.TestCase):
-
-    def __init__(self, tests=()):
-        super().__init__(tests)
-        self.html_example = self.load_html_test_data()
-
-    def load_html_test_data(self):
-        dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'bloomberg-eoan-2018-05-15.html')
-        file = open(filename, 'r')
-        html_example = file.read()
-        file.close()
-        return html_example
-        
+class TestSecurityWithScraper(unittest.TestCase):
+    
     def setUp(self):
         unittest.TestCase.setUp(self)
-        self.miner = ScraperBloomberg('')
+        scraper_mock = MagicMock()
+        scraper_mock.scrape_price.return_value = 10
+        scraper_mock.scrape_book.return_value = 250
+        scraper_mock.scrape_shares_outstanding.return_value = 50
+        self.stock = Security('E.On SE', 'EOAN:GR', scraper_mock)
         
-    
-    def test___parse_human_readable_number_to_int(self):
-        self.assertEqual(1200000000, self.miner._ScraperBloomberg__parse_human_readable_number_to_int('1.2B'))
-        self.assertEqual(2300000, self.miner._ScraperBloomberg__parse_human_readable_number_to_int('2.3M'))
-
-    def test_mine_price(self):
-        self.miner.update_html_soup(self.html_example)
-        self.assertEqual(self.miner.mine_price(), 9.29)
+    def test_book(self):
+        self.stock.update()
+        self.assertEqual(250, self.stock.book)
         
-    def test_mine_price_to_book(self):
-        self.miner.update_html_soup(self.html_example)
-        self.assertEqual(self.miner.mine_price_to_book(), 4.5789)
-        
-    def test_mine_shares_outstanding(self):
-        self.miner.update_html_soup(self.html_example)
-        self.assertEqual(self.miner.mine_shares_outstanding(), 2.2 * 10 ** 9)
-
 if __name__ == "__main__":
     unittest.main()

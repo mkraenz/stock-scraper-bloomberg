@@ -1,4 +1,5 @@
-from test_scraper.test_security import TestScraperBloomberg, TestSecurity
+from test_scraper.test_security import TestSecurity, TestSecurityWithScraper
+from test_scraper.test_scraper_bloomberg import TestScraperBloomberg
 import unittest
 
 
