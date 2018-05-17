@@ -45,7 +45,6 @@ class ScraperBloomberg(object):
         '''
         self.url = url
         self.html_soup = None
-        
 
     def update_html_soup(self, html_data):
         self.html_soup = BeautifulSoup(html_data, 'html.parser')
@@ -61,7 +60,6 @@ class ScraperBloomberg(object):
 
     def mine_price(self):
         return float(self.__get_tag_text_by_class('priceText__1853e8a5').replace(",", ""))
-    
 
     def __get_tag_text_by_class(self, html_class):
         tag = self.html_soup.find('span', attrs={'class':html_class})
@@ -99,4 +97,3 @@ if __name__ == '__main__':
     print('price = ', miner.mine_price())
     print('shares outstanding = ', miner.mine_shares_outstanding())
     print('price-to-book =', miner.mine_price_to_book())
-    

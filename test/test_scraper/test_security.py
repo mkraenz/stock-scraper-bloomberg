@@ -34,7 +34,6 @@ class TestScraperBloomberg(unittest.TestCase):
     def __init__(self, tests=()):
         super().__init__(tests)
         self.html_example = self.load_html_test_data()
-    
 
     def load_html_test_data(self):
         dirname = os.path.dirname(__file__)
@@ -63,8 +62,7 @@ class TestScraperBloomberg(unittest.TestCase):
         
     def test_mine_shares_outstanding(self):
         self.miner.update_html_soup(self.html_example)
-        self.assertEqual(self.miner.mine_shares_outstanding(), 2.2 * 10**9)
+        self.assertEqual(self.miner.mine_shares_outstanding(), 2.2 * 10 ** 9)
 
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
