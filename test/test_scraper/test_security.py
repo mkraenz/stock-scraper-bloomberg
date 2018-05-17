@@ -7,6 +7,7 @@ import unittest
 from unittest.mock import MagicMock
 from scraper.security import Security
 
+
 class TestSecurity(unittest.TestCase):
 
     def setUp(self):
@@ -26,6 +27,7 @@ class TestSecurity(unittest.TestCase):
         
     def test_to_string(self):
         self.assertTrue(str(self.stock))
+
         
 class TestSecurityWithScraper(unittest.TestCase):
     
@@ -40,6 +42,7 @@ class TestSecurityWithScraper(unittest.TestCase):
     def test_book(self):
         self.stock.update()
         self.assertEqual(250, self.stock.book)
+
         
 if __name__ == "__main__":
     unittest.main()

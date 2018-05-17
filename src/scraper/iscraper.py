@@ -3,6 +3,7 @@ Created on 17.05.2018
 
 @author: Mirco
 '''
+
         
 class IScraper(object):
     

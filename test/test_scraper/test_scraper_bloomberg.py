@@ -7,6 +7,7 @@ import unittest
 import os
 from scraper.scraper_bloomberg import ScraperBloomberg
 
+
 class TestScraperBloomberg(unittest.TestCase):
 
     def __init__(self, tests=()):
