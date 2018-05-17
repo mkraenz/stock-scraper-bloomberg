@@ -5,8 +5,9 @@ Created on 17.05.2018
 '''
 from bs4 import BeautifulSoup
 import urllib3
+from scraper.iscraper import IScraper
 
-class ScraperBloomberg(object):
+class ScraperBloomberg(IScraper):
     
     html_soup = None    
     BASE_URL = 'https://www.bloomberg.com/quote/'

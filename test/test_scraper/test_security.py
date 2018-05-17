@@ -6,8 +6,9 @@ Created on 15.05.2018
 import os
 
 import unittest
-from scraper.security import Security, ScraperBloomberg
 from unittest.mock import MagicMock
+from scraper.security import Security
+from scraper.scraper_bloomberg import ScraperBloomberg
 
 class TestSecurity(unittest.TestCase):
 
@@ -32,7 +33,7 @@ class TestSecurityWithScraper(unittest.TestCase):
         unittest.TestCase.setUp(self)
         scraper_mock = MagicMock()
         scraper_mock.scrape_price.return_value = 10
-        scraper_mock.scrape_price_to_book.return_value = 2
+        scraper_mock.scrape_book.return_value = 250
         scraper_mock.scrape_shares_outstanding.return_value = 50
         self.stock = Security('E.On SE', 'EOAN:GR', scraper_mock)
         
