@@ -8,7 +8,7 @@ install:
   - pip install -r requirements-dev.txt
   
 script: 
-  - python src/miner/security.py
+  - python src/scraper/security.py
   - cp -a test/. src
   - pip install src/.
   - coverage run src/tests.py
