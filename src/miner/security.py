@@ -83,8 +83,6 @@ class SecurityDataMinerBloomberg(object):
         else:
             raise ValueError('Given number_str must end on "B" or "M".')
             
-    
-
     def get_great_uncle_tag_by_text(self, text):
         shares_outstanding_string_tag = self.html_soup.find(text=text)
         great_uncle = shares_outstanding_string_tag.parent.parent.next_sibling
