@@ -8,7 +8,10 @@ install:
   
 script: 
   - python src/miner/security.py
+  - cp -a test/. src
+  - pip install src/.
   - python test/test_miner/test_security.py
+  - python src/tests.py
 #  - coverage run test/test_miner.test_security.py
 
 #after_success:
