@@ -4,9 +4,10 @@ Created on 17.05.2018
 @author: Mirco
 '''
 import os
+from scraper.iimporter import IImporter
 
 
-class StocknamesImporterCSV(object):
+class StocknamesImporterCSV(IImporter):
     
     def __init__(self):
         self.file = None
@@ -17,7 +18,7 @@ class StocknamesImporterCSV(object):
         dirname = os.path.dirname(__file__)
         filename = os.path.join(dirname, relative_path)
         self.file = open(filename, 'r')
-
+# 
     def cleanup(self):
         self.file.close()
 
