@@ -13,7 +13,6 @@ class Builder(object):
 
     def start(self):
         importer = StocknamesImporterCSV()
-        importer.load_file('../../test/test_scraper/test.csv')
         scraper = ScraperBloomberg()
         manager = Manager(importer, None, scraper, SecurityList())
         
