@@ -6,13 +6,14 @@ Created on 17.05.2018
 from scraper.security import Security
 from scraper.iimporter import IImporter
 from scraper.iscraper import IScraper
+from scraper.i_exporter import IExporter
 
 
 class Manager(object):
     
     def __init__(self, importer, exporter, scraper, security_list):
         assert isinstance(importer, IImporter)
-#         assert isinstance(exporter, IExporter)
+        assert isinstance(exporter, IExporter)
         assert isinstance(scraper, IScraper)
         self.importer = importer 
         self.exporter = exporter
@@ -29,3 +30,4 @@ class Manager(object):
         
         print(self.security_list)
         self.importer.cleanup()
+        self.exporter.write('testOutput', self.security_list)
