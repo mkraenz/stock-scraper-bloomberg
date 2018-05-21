@@ -4,7 +4,7 @@ Created on 17.05.2018
 @author: Mirco
 '''
 import os
-from scraper.iimporter import IImporter
+from scraper.i_importer import IImporter
 
 
 class ImporterCSV(IImporter):

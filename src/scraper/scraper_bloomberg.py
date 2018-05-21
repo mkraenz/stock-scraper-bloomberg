@@ -5,7 +5,7 @@ Created on 17.05.2018
 '''
 from bs4 import BeautifulSoup
 import urllib3
-from scraper.iscraper import IScraper
+from scraper.i_scraper import IScraper
 
 
 class ScraperBloomberg(IScraper):
