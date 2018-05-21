@@ -4,6 +4,7 @@ Created on 21.05.2018
 @author: Mirco
 '''
 
+
 class IImporter(object):
     '''
     classdocs

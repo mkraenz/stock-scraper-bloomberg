@@ -4,7 +4,7 @@ Created on 21.05.2018
 @author: Mirco
 '''
 import unittest
-from scraper.stocknames_importer_csv import StocknamesImporterCSV
+from scraper.importer_csv import ImporterCSV
 
 
 class TestStockNamesImporterCSV(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestStockNamesImporterCSV(unittest.TestCase):
         symbols = ['GOOGL:US', 'FB:US']
         path_rel_to_stocknames_importer_csv = '../../test/test_scraper/test.csv'
         
-        importer = StocknamesImporterCSV()
+        importer = ImporterCSV()
         importer.load_file(path_rel_to_stocknames_importer_csv)
         for pair in importer:
             self.assertIn(pair[0], names)

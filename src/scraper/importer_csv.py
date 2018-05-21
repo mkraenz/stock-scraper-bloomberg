@@ -7,7 +7,7 @@ import os
 from scraper.iimporter import IImporter
 
 
-class StocknamesImporterCSV(IImporter):
+class ImporterCSV(IImporter):
     
     def __init__(self):
         self.file = None
@@ -18,6 +18,7 @@ class StocknamesImporterCSV(IImporter):
         dirname = os.path.dirname(__file__)
         filename = os.path.join(dirname, relative_path)
         self.file = open(filename, 'r')
+
 # 
     def cleanup(self):
         self.file.close()

@@ -8,7 +8,6 @@ import csv
 
 
 class Exporter_CSV(IExporter):
-
             
     def write(self, file_name, security_list):
         ''' @parameter file_name: only the name, method attaches .csv '''

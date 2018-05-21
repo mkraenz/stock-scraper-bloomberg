@@ -28,6 +28,5 @@ class Manager(object):
             self.security_list.append(sec)
         self.security_list.update()
         
-        print(self.security_list)
         self.importer.cleanup()
         self.exporter.write('testOutput', self.security_list)
