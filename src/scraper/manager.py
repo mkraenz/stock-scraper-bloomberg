@@ -4,9 +4,9 @@ Created on 17.05.2018
 @author: Mirco
 '''
 from scraper.security import Security
-from scraper.iimporter import IImporter
-from scraper.iscraper import IScraper
 from scraper.i_exporter import IExporter
+from scraper.i_importer import IImporter
+from scraper.i_scraper import IScraper
 
 
 class Manager(object):
