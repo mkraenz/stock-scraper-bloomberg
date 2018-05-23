@@ -11,9 +11,7 @@ from scraper.security_list import SecurityList
 
 class Builder(object):
 
-    def start(self):
+    def create(self):
         importer = ImporterCSV()
         exporter = Exporter_CSV()
-        manager = Manager(importer, exporter, SecurityList())
-        
-        manager.manage()
+        return Manager(importer, exporter, SecurityList())

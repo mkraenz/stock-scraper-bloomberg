@@ -6,4 +6,5 @@ Created on 17.05.2018
 from scraper.builder import Builder
   
 if __name__ == '__main__':
-    Builder().start()
+    manager = Builder().create()
+    manager.manage()
