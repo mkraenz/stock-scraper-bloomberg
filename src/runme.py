@@ -5,6 +5,11 @@ Created on 17.05.2018
 '''
 from scraper.builder import Builder
   
-if __name__ == '__main__':
-    manager = Builder().create()
+
+def main():
+    manager = Builder().create_manager('../test/test_scraper/test.csv', '../test/output.csv')
     manager.manage()
+
+
+if __name__ == '__main__':
+    main()

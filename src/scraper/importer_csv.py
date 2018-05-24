@@ -9,14 +9,15 @@ from scraper.i_importer import IImporter
 
 class ImporterCSV(IImporter):
     
-    def __init__(self):
+    def __init__(self, input_path_rel):
+        self.input_path_rel = input_path_rel
         self.file = None
 
-    def load_file(self, relative_path):
+    def load_file(self):
         ''' expects a file in the form "name,symbol\nname2,symbol2\n" where \n are line breaks (Return key)'''
         if self.file: self.cleanup()
-        dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, relative_path)
+        cwd = os.getcwd()
+        filename = os.path.join(cwd, self.input_path_rel)
         self.file = open(filename, 'r')
 
 # 

@@ -10,7 +10,7 @@ class IImporter(object):
     classdocs
     '''
 
-    def load_file(self, relative_path):
+    def load_file(self):
         raise NotImplementedError("Class %s doesn't implement load_file()" % (self.__class__.__name__))
     
     def cleanup(self):

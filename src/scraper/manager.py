@@ -29,10 +29,9 @@ class Manager(object):
             self.security_list.append(sec)
 
     def manage(self):
-        file_path_relative_to_importer = '../../test/test_scraper/test.csv'
-        self.importer.load_file(file_path_relative_to_importer)
+        self.importer.load_file()
         self.fill_security_list(self.importer)
         self.security_list.update()
         
         self.importer.cleanup()
-        self.exporter.write('testOutput', self.security_list)
+        self.exporter.write(self.security_list)

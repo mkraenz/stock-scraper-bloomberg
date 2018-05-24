@@ -2,9 +2,25 @@
 [![Build Status](https://travis-ci.com/proSingularity/stock-scraper-bloomberg.svg?branch=master)](https://travis-ci.com/proSingularity/stock-scraper-bloomberg) [![codecov](https://codecov.io/gh/proSingularity/stock-scraper-bloomberg/branch/master/graph/badge.svg)](https://codecov.io/gh/proSingularity/stock-scraper-bloomberg)
 
 ## Installation
-`pip install [path_to_project]/src/.`
+* Download repository from github.  
+* Navigate into the project root. 
+* From command line run
+`pip install ./src`
 
-## Usage example
+## Script Usage example
+After installation navigate to project root.  
+From  command line run  
+```$ python src/scraper/scraper_cli.py run [relative_input_path.csv] [relative_output_path.csv]```
+
+Your *input_file.csv* should look like this:
+```
+Alphabet,GOOGL:US
+Facebook Inc,FB:US
+...
+```
+That is, tuples of company name and ticker as found on bloomberg.com.
+
+## API Usage example
 Example from interactive python console `python -i`
 ```
 >>> from scraper.security import Security
