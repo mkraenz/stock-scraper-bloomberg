@@ -29,14 +29,17 @@ class Security(object):
     def book_to_market(self):
         return self.book / self.market_cap()
     
-    def price_to_earnings(self):
-        return self.price / self.earnings
-    
-    def price_to_sales(self):
-        return self.price / self.sales
-    
     def earnings_per_share(self):
         return self.earnings / self.shares_outstanding
+    
+    def price_to_earnings(self):
+        return self.price / self.earnings_per_share()
+    
+    def sales_per_share(self):
+        return self.sales / self.shares_outstanding
+    
+    def price_to_sales(self):
+        return self.price / self.sales_per_share()
     
     def dividend_yield(self):
         return self.latest_dividend / self.price

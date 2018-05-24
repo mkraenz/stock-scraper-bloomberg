@@ -19,6 +19,14 @@ class IExporter(object):
             'price to book',
             'market cap',
             'book to market',
+            'earnings',
+            'price to earnings',
+            'EPS',
+            'sales',
+            'price to sales',
+            '30 days average volume',
+            'latest dividend',
+            'dividend yield',
         ]
         
     def get_security_data(self, security):
@@ -30,5 +38,13 @@ class IExporter(object):
             security.shares_outstanding,
             security.price_to_book(),
             security.market_cap(),
-            security.book_to_market()
+            security.book_to_market(),
+            security.earnings,
+            security.price_to_earnings(),
+            security.earnings_per_share(),
+            security.sales,
+            security.price_to_sales(),
+            security.thirty_day_average_volume,
+            security.latest_dividend,
+            security.dividend_yield(),
             ]
