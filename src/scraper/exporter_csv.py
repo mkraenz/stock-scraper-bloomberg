@@ -15,7 +15,7 @@ class Exporter_CSV(IExporter):
             
     def write(self, security_list):
         filename = os.path.join(os.getcwd(), self.output_path_rel)
-        with open(filename, 'w') as csv_file:
+        with open(filename, 'w', newline='') as csv_file:
             writer = csv.writer(csv_file)
             writer.writerow(self.get_header())
             for security in security_list:
