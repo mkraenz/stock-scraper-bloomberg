@@ -14,11 +14,11 @@ From  command line run
 
 Your *input_file.csv* should look like this:
 ```
-Alphabet,GOOGL:US
-Facebook Inc,FB:US
+GOOGL:US
+FB:US
 ...
 ```
-That is, tuples of company name and ticker as found on bloomberg.com.
+That is, the ticker symbol of each company as found on bloomberg.com. One symbol per line.
 
 ## API Usage example
 Example from interactive python console `python -i`
