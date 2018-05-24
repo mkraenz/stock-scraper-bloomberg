@@ -7,7 +7,7 @@ from scraper.builder import Builder
   
 
 def main():
-    manager = Builder().create_manager('../test/test_scraper/test.csv', '../test/output.csv')
+    manager = Builder().create_manager('../test/test_scraper/test_input.txt', '../test/output.csv')
     manager.manage()
 
 
