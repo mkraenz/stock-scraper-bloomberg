@@ -7,18 +7,31 @@
 * From command line run
 `pip install ./src`
 
+## Supported Python versions
+* 3.5
+* 3.6
+
+For details on other versions see [Travis build Issue #29](https://travis-ci.com/proSingularity/stock-scraper-bloomberg)
+
 ## Script Usage example
 After installation navigate to project root.  
 From  command line run  
-```$ python src/scraper/scraper_cli.py run [relative_input_path.csv] [relative_output_path.csv]```
+```$ python src/scraper/scraper_cli.py run [relative_input_path.txt] [relative_output_path.csv]```
 
-Your *input_file.csv* should look like this:
+Your *input_file.txt* should look like this:
 ```
 GOOGL:US
 FB:US
 ...
 ```
 That is, the ticker symbol of each company as found on bloomberg.com. One symbol per line.
+
+Example *outputfile.csv* from 2018/05/24
+```
+name,symbol,price,book,shares outstanding,price to book,market cap,book to market
+Alphabet Inc,GOOGL:US,1085.96,69115802241.82756,298660000,4.6926,324332813600.0,0.21310147892426373
+Facebook Inc,FB:US,186.9,64192795912.81824,2400000000,6.9877,448560000000.0,0.1431086051204259
+```
 
 ## API Usage example
 Example from interactive python console `python -i`
@@ -51,6 +64,7 @@ via `security.[command_from_list]`
 * codecov.io for code coverage
 * BeautifulSoup4 for web scraping
 * unittest for unit testing
+* fire for command line interface
 
 ## Previous name
 stock-data-miner
