@@ -20,6 +20,8 @@ class ScraperBloomberg(IScraper):
         '''
         if url: self.url = url
         self.html_soup = None
+        self.__price = 0
+        self.__shares_outstanding = 0
         
     def set_url(self, stock_symbol):
         self.url = self.BASE_URL + stock_symbol
@@ -40,7 +42,8 @@ class ScraperBloomberg(IScraper):
             self.update_html_soup(request.data)
 
     def scrape_price(self):
-        return float(self.__get_tag_text_by_class('priceText__1853e8a5').replace(",", ""))
+        self.__price = float(self.__get_tag_text_by_class('priceText__1853e8a5').replace(",", ""))
+        return self.__price
 
     def __get_tag_text_by_class(self, html_class):
         tag = self.html_soup.find('span', attrs={'class':html_class})
@@ -64,22 +67,51 @@ class ScraperBloomberg(IScraper):
 
     def scrape_shares_outstanding(self):
         great_uncle = self.get_great_uncle_tag_by_text('Shares Outstanding')
-        shares_outstanding = self.__parse_human_readable_number_to_int(great_uncle.text)
-        return shares_outstanding
+        self.__shares_outstanding = self.__parse_human_readable_number_to_int(great_uncle.text)
+        return self.__shares_outstanding
     
     def scrape_price_to_book(self):
         great_uncle = self.get_great_uncle_tag_by_text('Price to Book Ratio')
         return float(great_uncle.text)
-    
-    def scrape_book(self):
-        price_to_book = self.scrape_price_to_book()
-        shares_outstanding = self.scrape_shares_outstanding()
-        price = self.scrape_price()
+
+    def __market_cap(self):
+        shares_outstanding = self.__shares_outstanding if self.__shares_outstanding else self.scrape_shares_outstanding()
+        price = self.__price if self.__price else self.scrape_price()
         market_cap = shares_outstanding * price
-        return 1 / price_to_book * market_cap
+        return market_cap
+
+    def scrape_book(self):
+        ''' Call this after scrape_shares_outstanding() and scrape_price() for speedup '''
+        return self.__market_cap() / self.scrape_price_to_book() 
     
     def scrape_name(self):
         tag = self.html_soup.find('h1', attrs={'class':'companyName__99a4824b'})
         return tag.text.strip()
+    
+    def scrape_price_to_earnings(self):
+        return self.great_uncles_text_as_float('P/E Ratio')
+
+    def great_uncles_text_as_float(self, text):
+        great_uncle = self.get_great_uncle_tag_by_text(text)
+        great_uncles_number = float(great_uncle.text)
+        return great_uncles_number
+
+    def scrape_price_to_sales(self):
+        return self.great_uncles_text_as_float('Price to Sales Ratio')
+    
+    def scrape_thirty_days_average_volume(self):
+        volume_as_text_with_kommas = self.get_great_uncle_tag_by_text('30 Day Avg Volume').text
+        return float(volume_as_text_with_kommas.replace(',', ''))
+    
+    def scrape_latest_dividend(self):
+        try:
+            return self.great_uncles_text_as_float('Last Dividend Reported')
+        except ValueError:
+            return 0 # happens on website if Latest Dividend: --
         
-        
+    
+    def scrape_earnings(self):
+        return self.__market_cap() / self.scrape_price_to_earnings()
+    
+    def scrape_sales(self):
+        return self.__market_cap() / self.scrape_price_to_sales() 
