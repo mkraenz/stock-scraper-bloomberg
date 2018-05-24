@@ -7,7 +7,7 @@ import os
 from scraper.i_importer import IImporter
 
 
-class ImporterCSV(IImporter):
+class Importer(IImporter):
     
     def __init__(self, input_path_rel):
         self.input_path_rel = input_path_rel
