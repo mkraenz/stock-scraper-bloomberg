@@ -20,6 +20,8 @@ class ScraperBloomberg(IScraper):
         '''
         if url: self.url = url
         self.html_soup = None
+        self.__price = 0
+        self.__shares_outstanding = 0
         
     def set_url(self, stock_symbol):
         self.url = self.BASE_URL + stock_symbol
@@ -40,7 +42,8 @@ class ScraperBloomberg(IScraper):
             self.update_html_soup(request.data)
 
     def scrape_price(self):
-        return float(self.__get_tag_text_by_class('priceText__1853e8a5').replace(",", ""))
+        self.__price = float(self.__get_tag_text_by_class('priceText__1853e8a5').replace(",", ""))
+        return self.__price
 
     def __get_tag_text_by_class(self, html_class):
         tag = self.html_soup.find('span', attrs={'class':html_class})
@@ -64,17 +67,18 @@ class ScraperBloomberg(IScraper):
 
     def scrape_shares_outstanding(self):
         great_uncle = self.get_great_uncle_tag_by_text('Shares Outstanding')
-        shares_outstanding = self.__parse_human_readable_number_to_int(great_uncle.text)
-        return shares_outstanding
+        self.__shares_outstanding = self.__parse_human_readable_number_to_int(great_uncle.text)
+        return self.__shares_outstanding
     
     def scrape_price_to_book(self):
         great_uncle = self.get_great_uncle_tag_by_text('Price to Book Ratio')
         return float(great_uncle.text)
     
     def scrape_book(self):
+        ''' Call this after scrape_shares_outstanding() and scrape_price() for speedup '''
         price_to_book = self.scrape_price_to_book()
-        shares_outstanding = self.scrape_shares_outstanding()
-        price = self.scrape_price()
+        shares_outstanding = self.__shares_outstanding if self.__shares_outstanding else self.scrape_shares_outstanding()
+        price = self.__price if self.__price else self.scrape_price()
         market_cap = shares_outstanding * price
         return 1 / price_to_book * market_cap
     

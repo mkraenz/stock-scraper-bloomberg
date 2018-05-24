@@ -45,3 +45,8 @@ class TestScraperBloomberg(unittest.TestCase):
     def test_scrape_shares_outstanding(self):
         self.scraper.update_html_soup(self.html_example)
         self.assertEqual(self.scraper.scrape_shares_outstanding(), 2.2 * 10 ** 9)
+        
+    def test_scrape_book(self):
+        self.scraper.update_html_soup(self.html_example)
+        self.assertEqual(self.scraper.scrape_book(), 4463517438.686148)
+        
