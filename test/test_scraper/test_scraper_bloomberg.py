@@ -12,7 +12,7 @@ class TestScraperBloomberg(unittest.TestCase):
 
     def __init__(self, tests=()):
         super().__init__(tests)
-        self.html_example = self.load_html_test_data()
+        self.html_example = self.load_html_test_data('bloomberg-eoan-2018-05-15.html')
         
         self.NAME = 'E.ON SE'
         self.PRICE = 9.29
@@ -25,9 +25,9 @@ class TestScraperBloomberg(unittest.TestCase):
         self.THIRTY_DAYS_AVERAGE_VOLUME = 12684690
         self.LATEST_DIVIDEND = 0.3
 
-    def load_html_test_data(self):
+    def load_html_test_data(self, filename):
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'bloomberg-eoan-2018-05-15.html')
+        filename = os.path.join(dirname, filename)
         file = open(filename, 'r')
         html_example = file.read()
         file.close()
@@ -74,4 +74,10 @@ class TestScraperBloomberg(unittest.TestCase):
         
     def test_scrape_sales(self):
         self.assertEqual(self.scraper.scrape_sales(), self.MARKET_CAP / self.PRICE_TO_SALES)
+        
+    def test_scrape_latest_dividend_zero(self):
+        self.html_example = self.load_html_test_data('bloomberg-zero-dividend.html')
+        self.scraper.update_html_soup(self.html_example)
+        self.assertEqual(self.scraper.scrape_latest_dividend(), 0)
+        
         

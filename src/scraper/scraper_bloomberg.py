@@ -104,7 +104,11 @@ class ScraperBloomberg(IScraper):
         return float(volume_as_text_with_kommas.replace(',', ''))
     
     def scrape_latest_dividend(self):
-        return self.great_uncles_text_as_float('Last Dividend Reported')
+        try:
+            return self.great_uncles_text_as_float('Last Dividend Reported')
+        except ValueError:
+            return 0 # happens on website if Latest Dividend: --
+        
     
     def scrape_earnings(self):
         return self.__market_cap() / self.scrape_price_to_earnings()
