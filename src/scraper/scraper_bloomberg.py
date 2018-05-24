@@ -6,6 +6,7 @@ Created on 17.05.2018
 from bs4 import BeautifulSoup
 import urllib3
 from scraper.i_scraper import IScraper
+import certifi
 
 
 class ScraperBloomberg(IScraper):
@@ -30,7 +31,10 @@ class ScraperBloomberg(IScraper):
         '''
         Download the website and prepare it for scraping.
         '''
-        http = urllib3.PoolManager()
+        http = urllib3.PoolManager(
+            cert_reqs='CERT_REQUIRED',
+            ca_certs=certifi.where(),
+        )
         request = http.request('GET', self.url, timeout=4.0)
         if request.status == 200:
             self.update_html_soup(request.data)

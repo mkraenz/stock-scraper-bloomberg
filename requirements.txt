@@ -1,3 +1,4 @@
 BeautifulSoup4
 urllib3
 fire
+certifi
