@@ -1,3 +1,2 @@
 GOOGL:US
 FB:US
-EOAN:GR
