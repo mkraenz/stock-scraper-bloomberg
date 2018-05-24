@@ -8,10 +8,10 @@ import math
 
 class Security(object):
 
-    def __init__(self, name, symbol, scraper=None):
-        self.name = name
+    def __init__(self, symbol, scraper=None):
         self.symbol = symbol
         self.scraper = scraper
+        self.name = ''
         self.price = math.inf
         self.book = 0
         self.shares_outstanding = 0
@@ -28,6 +28,7 @@ class Security(object):
     def update(self):
         self.scraper.set_url(self.symbol)
         self.scraper.update()
+        self.name = self.scraper.scrape_name()
         self.price = self.scraper.scrape_price()
         self.shares_outstanding = self.scraper.scrape_shares_outstanding()
         self.book = self.scraper.scrape_book()

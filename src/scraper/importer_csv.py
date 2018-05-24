@@ -29,8 +29,7 @@ class ImporterCSV(IImporter):
         line = self.file.readline().replace('\n', '')
         if not line:
             raise StopIteration
-        name, symbol = line.split(',')
-        return name, symbol
+        return line
     
     def __iter__(self):
         return self

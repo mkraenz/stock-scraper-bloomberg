@@ -11,7 +11,8 @@ from scraper.security import Security
 class TestSecurity(unittest.TestCase):
 
     def setUp(self):
-        self.stock = Security('E.On', 'EOAN')
+        self.stock = Security('EOAN')
+        self.name = 'E.ON SE'
         self.stock.price = 10
         self.stock.book = 250
         self.stock.shares_outstanding = 50
@@ -37,7 +38,7 @@ class TestSecurityWithScraper(unittest.TestCase):
         scraper_mock.scrape_price.return_value = 10
         scraper_mock.scrape_book.return_value = 250
         scraper_mock.scrape_shares_outstanding.return_value = 50
-        self.stock = Security('E.On SE', 'EOAN:GR', scraper_mock)
+        self.stock = Security('EOAN:GR', scraper_mock)
         
     def test_book(self):
         self.stock.update()
