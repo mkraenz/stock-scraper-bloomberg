@@ -24,20 +24,24 @@ class TestScraperBloomberg(unittest.TestCase):
         
     def setUp(self):
         unittest.TestCase.setUp(self)
-        self.miner = ScraperBloomberg('')
+        self.scraper = ScraperBloomberg('')
     
     def test___parse_human_readable_number_to_int(self):
-        self.assertEqual(1200000000, self.miner._ScraperBloomberg__parse_human_readable_number_to_int('1.2B'))
-        self.assertEqual(2300000, self.miner._ScraperBloomberg__parse_human_readable_number_to_int('2.3M'))
+        self.assertEqual(1200000000, self.scraper._ScraperBloomberg__parse_human_readable_number_to_int('1.2B'))
+        self.assertEqual(2300000, self.scraper._ScraperBloomberg__parse_human_readable_number_to_int('2.3M'))
+        
+    def test_scrape_name(self):
+        self.scraper.update_html_soup(self.html_example)
+        self.assertEqual(self.scraper.scrape_name(), 'E.ON SE')
 
-    def test_mine_price(self):
-        self.miner.update_html_soup(self.html_example)
-        self.assertEqual(self.miner.scrape_price(), 9.29)
+    def test_scrape_price(self):
+        self.scraper.update_html_soup(self.html_example)
+        self.assertEqual(self.scraper.scrape_price(), 9.29)
         
-    def test_mine_price_to_book(self):
-        self.miner.update_html_soup(self.html_example)
-        self.assertEqual(self.miner.scrape_price_to_book(), 4.5789)
+    def test_scrape_price_to_book(self):
+        self.scraper.update_html_soup(self.html_example)
+        self.assertEqual(self.scraper.scrape_price_to_book(), 4.5789)
         
-    def test_mine_shares_outstanding(self):
-        self.miner.update_html_soup(self.html_example)
-        self.assertEqual(self.miner.scrape_shares_outstanding(), 2.2 * 10 ** 9)
+    def test_scrape_shares_outstanding(self):
+        self.scraper.update_html_soup(self.html_example)
+        self.assertEqual(self.scraper.scrape_shares_outstanding(), 2.2 * 10 ** 9)

@@ -73,4 +73,9 @@ class ScraperBloomberg(IScraper):
         price = self.scrape_price()
         market_cap = shares_outstanding * price
         return 1 / price_to_book * market_cap
+    
+    def scrape_name(self):
+        tag = self.html_soup.find('h1', attrs={'class':'companyName__99a4824b'})
+        return tag.text.strip()
+        
         

@@ -24,8 +24,8 @@ class Manager(object):
         self.security_list = security_list
 
     def fill_security_list(self, importer):
-        for pair in importer:
-            sec = Security(pair[0], pair[1], ScraperBloomberg())
+        for ticker_symbol in importer:
+            sec = Security(ticker_symbol, ScraperBloomberg())
             self.security_list.append(sec)
 
     def manage(self):
