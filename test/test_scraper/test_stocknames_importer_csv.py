@@ -12,7 +12,7 @@ class TestStockNamesImporterCSV(unittest.TestCase):
     def test_iterator(self):
         names = ['Alphabet', 'Facebook Inc']
         symbols = ['GOOGL:US', 'FB:US']
-        path_rel_to_project_root = 'test_scraper/test.csv'
+        path_rel_to_project_root = 'test/test_scraper/test.csv'
         
         importer = ImporterCSV(path_rel_to_project_root)
         importer.load_file()
